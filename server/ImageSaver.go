@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+
+	"github.com/vincent-petithory/dataurl"
 )
 
 func main() {
@@ -23,7 +25,13 @@ func saveImage(w http.ResponseWriter, req *http.Request) {
 	}
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
 	w.Header().Set("Vary", "Origin")
-	text := string(body)
-	println("Received a request for ", text)
-	fmt.Fprintf(w, "Received some data: %s", text)
+	println("Received a request")
+
+	dataURL, err := dataurl.DecodeString(string(body))
+	if err := ioutil.WriteFile("/data/animation-frames/test.png", dataURL.Data, 0644); err != nil {
+		println("error saving image", err)
+		fmt.Fprintf(w, "Failed to save image %s", err)
+		return
+	}
+	fmt.Fprintf(w, "Saved your image")
 }
