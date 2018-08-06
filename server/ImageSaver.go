@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -15,5 +16,14 @@ func main() {
 }
 
 func saveImage(w http.ResponseWriter, req *http.Request) {
-	fmt.Fprintf(w, "Received some data: %s", req.Body)
+	body, err := ioutil.ReadAll(req.Body)
+	if err != nil {
+		println("error reading body")
+		return
+	}
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:3000")
+	w.Header().Set("Vary", "Origin")
+	text := string(body)
+	println("Received a request for ", text)
+	fmt.Fprintf(w, "Received some data: %s", text)
 }
