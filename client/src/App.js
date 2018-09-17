@@ -37,7 +37,7 @@ class App extends Component {
           <h1 className="App-title">Welcome to React</h1>
         </header>
         <p className="App-intro">
-          Okay!
+          Okay! Here we go!
         </p>
         <canvas width="640" height="480" ref={this.canvasRef}></canvas>
         <button onClick={() => writeImage(this.canvasRef.current)}>Save image</button>

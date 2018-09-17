@@ -1,0 +1,17 @@
+version: "3"
+
+services:
+  yarn:
+    image: drawing-client
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    volumes:
+      - ./client:/site
+    ports:
+      - 3000:3000
+  go:
+    image: drawing-server
+    build:
+      context: ./server
+      dockerfile: Dockerfile
