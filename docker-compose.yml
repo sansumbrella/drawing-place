@@ -15,3 +15,5 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
+    volumes:
+      - ./server:/go/src/app
